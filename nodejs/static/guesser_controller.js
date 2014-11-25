@@ -47,11 +47,61 @@ app.controller("guesserController", function ($scope, $http) {
                alert("AJAX call failed");
              });
   }
-    
+
   $scope.yes = function () {
     $scope.guessedRight = true;
   }
 
+  $scope.no = function () {
+    $scope.oldThing = $scope.current.guess;
+    $scope.userThing = "";
+    $scope.userQuestion = "";
+    $scope.answerOld = "";
+    $scope.answerNew = "";
+    $scope.confirmed = false;
+    $scope.view = "learning";
+  }
 
+  $scope.submit = function () {
+    if ($scope.answerOld === $scope.answerNew ||
+        $scope.answerOld === "" ||
+        $scope.answerNew === "") {
+      alert("Old and new answer must be different and not empty");
+      return;
+    }
+    if ($scope.userQuestion[$scope.userQuestion.length-1] !== "?") {
+      $scope.userQuestion += "?";
+    }
+    var a = { oldLeaf: $scope.current._key,
+              oldLeafRev: $scope.current._rev,
+              newQuestion: {
+                question: $scope.userQuestion,
+                answer1:  $scope.answerOld,
+                answer2:  $scope.answerNew,
+                goto1:    $scope.current._key,
+                isLeaf:   false
+              },
+              newLeaf: {
+                isLeaf: true,
+                guess: $scope.userThing
+              }
+            };
+    $http.put("put", a)
+      .success(function(response) {
+                 console.log(response);
+                 if (response.error === true) {
+                   alert("Could not submit new question! "+
+                         "This leaf was already modified!");
+                   $scope.restart();
+                 }
+                 else {
+                   $scope.confirmed = true;
+                 }
+               })
+      .error(function(response) {
+               console.log(response);
+               alert("AJAX call failed, cannot update");
+             });
+  }
 });
 

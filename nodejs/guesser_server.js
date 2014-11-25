@@ -32,9 +32,9 @@ function installStatic (route, filename, contenttype) {
 installStatic("/", "static/index.html", "text/html");
 installStatic("/index.html", "static/index.html", "text/html");
 installStatic("/base.css", "static/base.css", "text/css");
-installStatic("/angular.min.js", "static/angular.min.js", 
+installStatic("/angular.min.js", "static/angular.min.js",
               "application/javascript");
-installStatic("/guesser_controller.js", "static/guesser_controller.js", 
+installStatic("/guesser_controller.js", "static/guesser_controller.js",
               "application/javascript");
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -52,6 +52,15 @@ app.get("/get/:key", function (req, res) {
            } );
 });
 
+// This is just a trampoline to the Foxx app:
+app.put("/put", function (req, res) {
+  req.pipe(concat( function(body) {
+    db.put("/dev/guesser/put", JSON.parse(body.toString()))
+      .done(function(result) {
+        res.send(result);
+      });
+  }));
+});
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Now finally make the server:

@@ -46,6 +46,29 @@
 
       </div>
 
+      <!-- Fourth view, the learning screen: -->
+      <div ng-show="view === 'learning'">
+        <h2>{{name}}, OK, you won. Now please help me to learn.</h2>
+
+        <p>What was it you thought of?
+        <input type="text" ng-model="userThing"/>
+        (please include an indefinite article "a" or "an")</p>
+        <p>Please give me a question that distinguishes {{oldThing}}
+           and {{userThing}}:
+        <input type="text" ng-model="userQuestion"/></p>
+        <p>The answer for {{oldThing}} is:
+        <input type="text" ng-model="answerOld"/>
+        The answer for {{userThing}} is:
+        <input type="text" ng-model="answerNew"/></p>
+        <p ng-show="! confirmed">
+        <button ng-click="submit()">Submit this</button></p>
+
+        <div ng-show="confirmed">
+          <p>Thank you very much, your new question has been
+          submitted. Click
+          <button ng-click="restart()">here</button> to play again.</p>
+        </div>
+      </div>
     </div>
     <script src="guesser_controller.js"></script>
   </body>
