@@ -9,7 +9,7 @@ var concat = require("concat-stream");
 var arango = require("arangojs");
 var db = new arango.Connection("http://localhost:8529"); // configure server
 db = db.use("/_system");                                 // configure database
-var collectionName = "dev_guesser_questions";            // configure collection
+var collectionName = "guesser_questions";                // configure collection
 
 ////////////////////////////////////////////////////////////////////////////////
 /// An express app:
@@ -55,7 +55,7 @@ app.get("/get/:key", function (req, res) {
 // This is just a trampoline to the Foxx app:
 app.put("/put", function (req, res) {
   req.pipe(concat( function(body) {
-    db.put("/dev/guesser/put", JSON.parse(body.toString()))
+    db.put("/guesser/put", JSON.parse(body.toString()))
       .done(function(result) {
         res.send(result);
       });
