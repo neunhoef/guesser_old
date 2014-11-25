@@ -2,6 +2,44 @@ var app = angular.module("guesser", []);
 
 app.controller("guesserController", function ($scope, $http) {
   $scope.name = "";
-  $scope.view = "welcome";
+
+  $scope.restart = function () {
+    $scope.currentKey = "root";
+    $http.get("get/root")
+      .success(function(response) {
+                 console.log(response);
+                 $scope.current = response;
+               })
+      .error(function(response) {
+               console.log(response);
+               $scope.current = {};
+               alert("AJAX call failed");
+             });
+      $scope.view = "welcome";
+  }
+
+  $scope.restart();
+
+  $scope.update = function () {
+    $scope.theQuestion = $scope.current.question;
+    $scope.theAnswer1 = $scope.current.answer1;
+    $scope.theAnswer2 = $scope.current.answer2;
+    $scope.view = "question";
+  }
+
+  $scope.answer = function (newkey) {
+    $http.get("get/"+newkey)
+      .success(function(response) {
+                 console.log(response);
+                 $scope.current = response;
+                 $scope.currentKey = newkey;
+                 $scope.update();
+               })
+      .error(function(response) {
+               console.log(response);
+               alert("AJAX call failed");
+             });
+  }
+
 });
 

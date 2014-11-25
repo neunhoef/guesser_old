@@ -6,6 +6,10 @@
 
 var fs = require("fs");
 var concat = require("concat-stream");
+var arango = require("arangojs");
+var db = new arango.Connection("http://localhost:8529"); // configure server
+db = db.use("/_system");                                 // configure database
+var collectionName = "dev_guesser_questions";            // configure collection
 
 ////////////////////////////////////////////////////////////////////////////////
 /// An express app:
@@ -32,6 +36,22 @@ installStatic("/angular.min.js", "static/angular.min.js",
               "application/javascript");
 installStatic("/guesser_controller.js", "static/guesser_controller.js", 
               "application/javascript");
+
+////////////////////////////////////////////////////////////////////////////////
+/// AJAX services:
+////////////////////////////////////////////////////////////////////////////////
+
+app.get("/get/:key", function (req, res) {
+  var key = req.param("key");
+  db.document.get(collectionName+"/"+key)
+    .done( function(data) {
+             res.json(data);
+           },
+           function(err) {
+             res.json(err);
+           } );
+});
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Now finally make the server:
