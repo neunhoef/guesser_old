@@ -21,10 +21,17 @@ app.controller("guesserController", function ($scope, $http) {
   $scope.restart();
 
   $scope.update = function () {
-    $scope.theQuestion = $scope.current.question;
-    $scope.theAnswer1 = $scope.current.answer1;
-    $scope.theAnswer2 = $scope.current.answer2;
-    $scope.view = "question";
+    if (! $scope.current.isLeaf) {
+      $scope.theQuestion = $scope.current.question;
+      $scope.theAnswer1 = $scope.current.answer1;
+      $scope.theAnswer2 = $scope.current.answer2;
+      $scope.view = "question";
+    }
+    else {
+      $scope.theGuess = $scope.current.guess;
+      $scope.guessedRight = false;
+      $scope.view = "guess";
+    }
   }
 
   $scope.answer = function (newkey) {
@@ -40,6 +47,11 @@ app.controller("guesserController", function ($scope, $http) {
                alert("AJAX call failed");
              });
   }
+    
+  $scope.yes = function () {
+    $scope.guessedRight = true;
+  }
+
 
 });
 
