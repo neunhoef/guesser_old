@@ -4,12 +4,14 @@
 /// Libraries and database driver
 ////////////////////////////////////////////////////////////////////////////////
 
+var server_addr = process.env.ARANGODB_SERVER ? process.env.ARANGODB_SERVER : "http://localhost:8529";
+
 var fs = require("fs");
 var concat = require("concat-stream");
 var arango = require("arangojs");
-var db = new arango.Connection("http://localhost:8529"); // configure server
-db = db.use("/_system");                                 // configure database
-var collectionName = "guesser_questions";                // configure collection
+var db = new arango.Connection(server_addr); // configure server
+db = db.use("/_system");                     // configure database
+var collectionName = "guesser_questions";    // configure collection
 
 ////////////////////////////////////////////////////////////////////////////////
 /// An express app:
