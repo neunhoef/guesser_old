@@ -4,15 +4,18 @@ FROM dockerfile/nodejs
 # maintainer info
 MAINTAINER Frank Celler <f.celler@arangodb.com>
 
-# update system
-RUN apt-get -y -qq --force-yes update
+# copy the startup script
+ADD ./scripts /scripts
 
-# use NPM to install the guesser game
-RUN npm -G install guesser
+# copy the install files
+ADD ./guesser-foxx.zip /install/guesser-foxx.zip
+ADD ./guesser-node.tar /install/guesser-node
+
+# install ubuntu package for arangosh
+RUN /scripts/install.sh
 
 # application is running on port 8000
 EXPOSE 8000
 
 # start the node server
-WORKDIR /data/node_modules/guesser
-CMD [ "node", "-e", "require('guesser')" ]
+CMD [ "/scripts/start.sh" ]
