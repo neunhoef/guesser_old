@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 var server_addr = process.env.ARANGODB_SERVER ? process.env.ARANGODB_SERVER : "http://localhost:8529";
+var ignore = console.log("Using DB-Server " + server_addr);
 
 var fs = require("fs");
 var concat = require("concat-stream");
