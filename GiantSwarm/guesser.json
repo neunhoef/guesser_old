@@ -11,7 +11,7 @@
           "dependencies": [
             { "name": "guesser-back-end", "port": 8529 }
           ],
-          "domains": { "guesser.alpha.giantswarm.io": "8000" }
+          "domains": { "guesser.gigantic.io": "8000" }
         },
         {
           "component_name": "guesser-back-end",
