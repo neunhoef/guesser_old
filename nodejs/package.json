@@ -36,6 +36,7 @@
   "files": [
     "guesser_server.js",
     "static",
-    "package.json"
+    "package.json",
+    "bower.json"
   ]
 }
