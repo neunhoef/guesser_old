@@ -1,16 +1,15 @@
 {
   "name": "guesser",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "description": "a guessing game that learns",
   "main": "guesser_server.js",
   "dependencies": {
     "arangojs": ">=3.0.0-rc1",
     "concat-stream": ">=1.4.6",
     "express": ">=4.10.3",
-    "bower": ">=1.3.12"
   },
   "scripts": {
-    "postinstall": "bower install"
+    "prepublish": "bower install"
   },
   "devDependencies": {},
   "repository": {
@@ -40,6 +39,6 @@
     "guesser_server.js",
     "static",
     "package.json",
-    "bower.json"
+    "bower_components/angularjs/angularjs.min.js"
   ]
 }
