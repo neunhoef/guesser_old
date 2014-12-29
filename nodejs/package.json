@@ -6,7 +6,7 @@
   "dependencies": {
     "arangojs": ">=3.0.0-rc1",
     "concat-stream": ">=1.4.6",
-    "express": ">=4.10.3",
+    "express": ">=4.10.3"
   },
   "scripts": {
     "prepublish": "bower install"
