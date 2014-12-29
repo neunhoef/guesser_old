@@ -5,11 +5,25 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 var fs = require("fs");
+var Promise = require("promise");
 var concat = require("concat-stream");
-var arango = require("arangojs");
-var db = new arango.Connection("http://localhost:8529"); // configure server
-db = db.use("/_system");                                 // configure database
-var collectionName = "guesser_questions";                // configure collection
+var Database = require("arangojs");
+var db = new Database();                               // configure server
+var collectionName = "guesser_questions";              // configure collection
+var collPromise = new Promise(function(resolve, reject) {
+  db.collection(collectionName, false, function(err, res) {
+    if (err) {
+      reject(err);
+    }
+    else {
+      resolve(res);
+    }
+  });
+});
+collPromise.then(null, function(err) {
+  console.log("Cannot contact the database! Terminating...");
+  process.exit(1);
+});
 
 ////////////////////////////////////////////////////////////////////////////////
 /// An express app:
@@ -43,23 +57,32 @@ installStatic("/guesser_controller.js", "static/guesser_controller.js",
 
 app.get("/get/:key", function (req, res) {
   var key = req.param("key");
-  db.document.get(collectionName+"/"+key)
-    .done( function(data) {
-             res.json(data);
-           },
-           function(err) {
-             res.json(err);
-           } );
+  collPromise.then(function(coll) {
+                     coll.document(key, function(err, x) {
+                       if (err) {
+                         res.json(err);
+                       }
+                       else {
+                         res.json(x);
+                       }
+                     });
+                   }, null);  // if this were rejected, we would be out already
 });
 
 // This is just a trampoline to the Foxx app:
 app.put("/put", function (req, res) {
   req.pipe(concat( function(body) {
-    db.put("/guesser/put", JSON.parse(body.toString()))
-      .done(function(result) {
-        res.send(result);
+    db._connection.put("../guesser/put", JSON.parse(body.toString()),
+      function(err, x) {
+        if (err) {
+          err.error = true;
+          res.send(err);
+        }
+        else {
+          res.send(x);
+        }
       });
-  }));
+  } ));
 });
 
 ////////////////////////////////////////////////////////////////////////////////

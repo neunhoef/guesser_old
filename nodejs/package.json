@@ -4,7 +4,7 @@
   "description": "a guessing game that learns",
   "main": "guesser_server.js",
   "dependencies": {
-    "arangojs": "~2.0.2",
+    "arangojs": ">=3.0.0-rc1",
     "concat-stream": "~1.4.6",
     "express": "~4.10.3"
   },
