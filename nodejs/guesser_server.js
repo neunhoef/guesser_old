@@ -46,7 +46,7 @@ function installStatic (route, filename, contenttype) {
 installStatic("/", "static/index.html", "text/html");
 installStatic("/index.html", "static/index.html", "text/html");
 installStatic("/base.css", "static/base.css", "text/css");
-installStatic("/angular.min.js", "static/angular.min.js",
+installStatic("/angular.min.js", "bower_components/angularjs/angular.min.js",
               "application/javascript");
 installStatic("/guesser_controller.js", "static/guesser_controller.js",
               "application/javascript");
