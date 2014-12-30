@@ -12,7 +12,9 @@
   "scripts": {
     "prepublish": "bower install"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "bower": "*"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/ArangoDB/guesser"
