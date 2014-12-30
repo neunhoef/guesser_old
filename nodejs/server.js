@@ -9,6 +9,7 @@ var Promise = require("promise");
 var concat = require("concat-stream");
 var Database = require("arangojs");
 var db = new Database();                               // configure server
+var ep = db.endpoint();
 var collectionName = "guesser_questions";              // configure collection
 var collPromise = new Promise(function(resolve, reject) {
   db.collection(collectionName, false, function(err, res) {
@@ -72,7 +73,7 @@ app.get("/get/:key", function (req, res) {
 // This is just a trampoline to the Foxx app:
 app.put("/put", function (req, res) {
   req.pipe(concat( function(body) {
-    db._connection.put("../guesser/put", JSON.parse(body.toString()),
+    ep.put("/guesser/put", JSON.parse(body.toString()),
       function(err, x) {
         if (err) {
           err.error = true;
