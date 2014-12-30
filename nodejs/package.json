@@ -4,7 +4,7 @@
   "description": "a guessing game that learns",
   "main": "server.js",
   "dependencies": {
-    "arangojs": ">=3.0.0-rc1",
+    "arangojs": ">=3.0.0-rc2",
     "concat-stream": ">=1.4.6",
     "express": ">=4.10.3",
     "promise": ">=6.0.1"
