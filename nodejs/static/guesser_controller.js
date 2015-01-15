@@ -1,6 +1,6 @@
 var app = angular.module("guesser", []);
 
-app.controller("guesserController", function ($scope, $http) {
+app.controller("guesserController", ["$scope", "$http", function ($scope, $http) {
   $scope.container = { "name": "" };
 
   $scope.restart = function () {
@@ -94,5 +94,5 @@ app.controller("guesserController", function ($scope, $http) {
                alert("AJAX call failed, cannot update");
              });
   }
-});
+} ] );
 
