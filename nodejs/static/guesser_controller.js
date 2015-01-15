@@ -1,10 +1,9 @@
 var app = angular.module("guesser", []);
 
 app.controller("guesserController", function ($scope, $http) {
-  $scope.name = "";
+  $scope.container = { "name": "" };
 
   $scope.restart = function () {
-    $scope.currentKey = "root";
     $http.get("get/root")
       .success(function(response) {
                  console.log(response);
@@ -33,13 +32,13 @@ app.controller("guesserController", function ($scope, $http) {
       $scope.view = "guess";
     }
   }
+  $scope.startGame = $scope.update;
 
   $scope.answer = function (newkey) {
     $http.get("get/"+newkey)
       .success(function(response) {
                  console.log(response);
                  $scope.current = response;
-                 $scope.currentKey = newkey;
                  $scope.update();
                })
       .error(function(response) {
@@ -62,28 +61,26 @@ app.controller("guesserController", function ($scope, $http) {
     $scope.view = "learning";
   }
 
-  $scope.submit = function () {
-    if ($scope.answerOld === $scope.answerNew ||
-        $scope.answerOld === "" ||
-        $scope.answerNew === "") {
-      alert("Old and new answer must be different and not empty");
+  $scope.submit = function (userThing, userQuestion, answerOld, answerNew) {
+    if (answerOld === answerNew) {
+      alert("Old and new answer must be different");
       return;
     }
-    if ($scope.userQuestion[$scope.userQuestion.length-1] !== "?") {
-      $scope.userQuestion += "?";
+    if (userQuestion[userQuestion.length-1] !== "?") {
+      userQuestion += "?";
     }
     var a = { oldLeaf: $scope.current._key,
               oldLeafRev: $scope.current._rev,
               newQuestion: {
-                question: $scope.userQuestion,
-                answer1:  $scope.answerOld,
-                answer2:  $scope.answerNew,
+                question: userQuestion,
+                answer1:  answerOld,
+                answer2:  answerNew,
                 goto1:    $scope.current._key,
                 isLeaf:   false
               },
               newLeaf: {
                 isLeaf: true,
-                guess: $scope.userThing
+                guess: userThing
               }
             };
     $http.put("put", a)
