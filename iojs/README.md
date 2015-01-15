@@ -1,7 +1,7 @@
 guesser - a guessing game that learns
 =====================================
 
-This is the node.js server part of the app. The whole code including
+This is the io.js server part of the app. The whole code including
 the ArangoDB Foxx app can be found at
 [github-repository](https://github.com/ArangoDB/guesser).
 
