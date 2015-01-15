@@ -1,6 +1,6 @@
 {
   "name": "guesser",
-  "version": "1.3.7",
+  "version": "1.4.0",
   "description": "a guessing game that learns",
   "main": "server.js",
   "dependencies": {
