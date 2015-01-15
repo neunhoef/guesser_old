@@ -49,11 +49,7 @@ app.controller("guesserController", ["$scope", "$http", function ($scope, $http)
 
   $scope.no = function () {
     $scope.oldThing = $scope.current.guess;
-    $scope.userThing = "";
-    $scope.userQuestion = "";
-    $scope.answerOld = "";
-    $scope.answerNew = "";
-    $scope.confirmed = false;
+    $scope.submitted = false;
     $scope.view = "learning";
   }
 
@@ -87,7 +83,7 @@ app.controller("guesserController", ["$scope", "$http", function ($scope, $http)
                    $scope.restart();
                  }
                  else {
-                   $scope.confirmed = true;
+                   $scope.submitted = true;
                  }
                })
       .error(function(response) {

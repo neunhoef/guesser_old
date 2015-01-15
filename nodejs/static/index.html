@@ -66,13 +66,13 @@
         <input type="text" ng-model="answerOld" required/>
         The answer for {{userThing}} is:
         <input type="text" ng-model="answerNew" required/></p>
-        <p ng-show="! confirmed">
+        <p ng-show="! submitted">
         <button ng-disabled="inputForm.$invalid"
                 ng-click="submit(userThing,userQuestion,answerOld,answerNew)">
                Submit this</button></p>
         </form>
 
-        <div ng-show="confirmed">
+        <div ng-show="submitted">
           <p>Thank you very much, your new question has been
           submitted. Click
           <button ng-click="restart()">here</button> to play again.</p>
