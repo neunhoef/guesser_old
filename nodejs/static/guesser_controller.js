@@ -6,11 +6,9 @@ app.controller("guesserController", function ($scope, $http) {
   $scope.restart = function () {
     $http.get("get/root")
       .success(function(response) {
-                 console.log(response);
                  $scope.current = response;
                })
       .error(function(response) {
-               console.log(response);
                $scope.current = {};
                alert("AJAX call failed");
              });
@@ -37,12 +35,10 @@ app.controller("guesserController", function ($scope, $http) {
   $scope.answer = function (newkey) {
     $http.get("get/"+newkey)
       .success(function(response) {
-                 console.log(response);
                  $scope.current = response;
                  $scope.update();
                })
       .error(function(response) {
-               console.log(response);
                alert("AJAX call failed");
              });
   }
@@ -85,7 +81,6 @@ app.controller("guesserController", function ($scope, $http) {
             };
     $http.put("put", a)
       .success(function(response) {
-                 console.log(response);
                  if (response.error === true) {
                    alert("Could not submit new question! "+
                          "This leaf was already modified!");
@@ -96,7 +91,6 @@ app.controller("guesserController", function ($scope, $http) {
                  }
                })
       .error(function(response) {
-               console.log(response);
                alert("AJAX call failed, cannot update");
              });
   }
