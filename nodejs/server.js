@@ -57,7 +57,7 @@ installStatic("/guesser_controller.js", "static/guesser_controller.js",
 ////////////////////////////////////////////////////////////////////////////////
 
 app.get("/get/:key", function (req, res) {
-  var key = req.param("key");
+  var key = req.params.key;
   collPromise.then(function(coll) {
                      coll.document(key, function(err, x) {
                        if (err) {
